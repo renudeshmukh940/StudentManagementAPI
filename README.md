@@ -2,23 +2,25 @@
 
 ## Overview
 
-This project is a Student Management System developed using ASP.NET Core Web API following a Layered Architecture. It provides secure REST APIs to manage student records with JWT Authentication, Entity Framework Core, SQL Server, Swagger documentation, Global Exception Handling, and Serilog logging.
+Student Management System is an ASP.NET Core Web API project developed to manage student records using RESTful APIs.
+
+The project follows a layered architecture with Controller, Service, and Repository layers. It includes JWT Authentication, SQL Server database integration, Entity Framework Core, Swagger API documentation, Global Exception Handling Middleware, and Serilog logging.
 
 ---
 
 ## Features
 
+- Student CRUD Operations
 - JWT Authentication
-- CRUD Operations
+- Secure API Endpoints
 - Layered Architecture
 - Repository Pattern
 - Entity Framework Core
-- SQL Server
+- SQL Server Database
+- Swagger API Documentation
 - Global Exception Handling Middleware
 - Serilog Logging
-- Swagger Documentation
-- Dependency Injection
-- Clean Code Structure
+- Input Validation
 
 ---
 
@@ -35,159 +37,207 @@ This project is a Student Management System developed using ASP.NET Core Web API
 
 ---
 
-## Project Structure
+## Project Architecture
 
 ```
 StudentManagementSystem
+
 │
 ├── Controllers
+│   ├── AuthController.cs
+│   └── StudentsController.cs
+│
 ├── Services
+│   ├── IStudentService.cs
+│   └── StudentService.cs
+│
 ├── Repositories
+│   ├── IStudentRepository.cs
+│   └── StudentRepository.cs
+│
 ├── Models
+│   ├── Student.cs
+│   ├── LoginRequest.cs
+│   └── LoginResponse.cs
+│
 ├── Data
+│   └── AppDbContext.cs
+│
 ├── Middleware
-├── Helpers
-├── appsettings.json
+│   └── ExceptionMiddleware.cs
+│
+├── Database
+│   └── StudentManagementDB.sql
+│
 ├── Program.cs
+├── appsettings.json
 └── README.md
 ```
 
 ---
 
-## Database
+# Database Setup
 
-Database Name
+## Option 1: SQL Script
+
+1. Open SQL Server Management Studio (SSMS)
+2. Open:
+
+```
+Database/StudentManagementDB.sql
+```
+
+3. Execute the script.
+
+It will create:
+
+Database:
 
 ```
 StudentManagementDB
 ```
 
-Student Table
+Table:
 
-| Column | Type |
-|---------|------|
+```
+Students
+```
+
+---
+
+## Student Table Structure
+
+| Column | Data Type |
+|---|---|
 | Id | int |
-| Name | nvarchar |
-| Email | nvarchar |
+| Name | nvarchar(100) |
+| Email | nvarchar(100) |
 | Age | int |
-| Course | nvarchar |
+| Course | nvarchar(100) |
 | CreatedDate | datetime |
 
 ---
 
-## API Endpoints
+# Configure Connection String
 
-### Authentication
+Update `appsettings.json` according to your SQL Server instance.
 
-| Method | Endpoint |
-|--------|----------|
-| POST | /api/auth/login |
-
-Default Credentials
-
-```
-Username : admin
-Password : admin123
-```
-
----
-
-### Student APIs
-
-| Method | Endpoint |
-|--------|----------|
-| GET | /api/students |
-| GET | /api/students/{id} |
-| POST | /api/students |
-| PUT | /api/students/{id} |
-| DELETE | /api/students/{id} |
-
----
-
-## Setup Instructions
-
-### Clone Repository
-
-```bash
-git clone https://github.com/yourusername/StudentManagementSystem-WebAPI.git
-```
-
-### Open Project
-
-Open the solution in Visual Studio 2022.
-
-### Configure Database
-
-Update the connection string inside **appsettings.json**
+Example:
 
 ```json
 "ConnectionStrings": {
-  "DefaultConnection": "Server=YOUR_SERVER;Database=StudentManagementDB;Trusted_Connection=True;TrustServerCertificate=True;"
+  "DefaultConnection": "Server=localhost;Database=StudentManagementDB;Trusted_Connection=True;TrustServerCertificate=True"
 }
 ```
 
 ---
 
-### Apply Migration
+# Entity Framework Migration (Alternative)
 
-```powershell
+Run the following commands in Package Manager Console:
+
+```
 Add-Migration InitialCreate
+```
 
+```
 Update-Database
 ```
 
 ---
 
-### Run Project
+# JWT Authentication
 
-Press
+The API uses JWT Authentication to secure student endpoints.
 
-```
-F5
-```
-
-or
+## Login API
 
 ```
-Ctrl + F5
+POST /api/auth/login
 ```
 
----
+Request:
 
-## Swagger
+```json
+{
+  "username": "admin",
+  "password": "admin123"
+}
+```
+
+Response:
+
+```json
+{
+  "token": "JWT_TOKEN"
+}
+```
+
+Use this token in Swagger:
 
 ```
-https://localhost:5001/swagger
+Authorize → Bearer Token
 ```
 
-Use the Login API to generate the JWT token.
-
-Click **Authorize** and enter:
+Format:
 
 ```
 Bearer YOUR_TOKEN
 ```
 
-Now all protected APIs can be accessed.
+---
+
+# API Endpoints
+
+## Authentication
+
+| Method | Endpoint |
+|---|---|
+| POST | /api/auth/login |
 
 ---
 
-## Logging
+## Student APIs
 
-Serilog is configured to generate logs.
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | /api/students | Get all students |
+| GET | /api/students/{id} | Get student by id |
+| POST | /api/students | Add new student |
+| PUT | /api/students/{id} | Update student |
+| DELETE | /api/students/{id} | Delete student |
+
+---
+
+# Swagger Documentation
+
+Run the project and open:
 
 ```
-Logs/
-    log-.txt
+https://localhost:<port>/swagger
+```
+
+Swagger provides API testing and JWT authorization support.
+
+---
+
+# Logging
+
+Serilog is configured for application logging.
+
+Logs are stored in:
+
+```
+Logs/log-.txt
 ```
 
 ---
 
-## Error Handling
+# Exception Handling
 
-Global Exception Middleware returns consistent JSON responses for unhandled exceptions.
+Global Exception Middleware handles unexpected errors and returns standard error responses.
 
-Example
+Example:
 
 ```json
 {
@@ -198,27 +248,64 @@ Example
 
 ---
 
-## Security
+# How to Run the Project
 
-- JWT Authentication
-- Secure API Endpoints
-- Input Validation
-- Exception Handling
-- Dependency Injection
+## Step 1
+
+Clone repository:
+
+```
+git clone <repository-url>
+```
+
+## Step 2
+
+Open solution file:
+
+```
+StudentManagementSystem.sln
+```
+
+## Step 3
+
+Restore NuGet packages.
+
+## Step 4
+
+Configure SQL Server connection string.
+
+## Step 5
+
+Run application:
+
+```
+Ctrl + F5
+```
 
 ---
 
-## Future Enhancements
+# Security
+
+- JWT Based Authentication
+- Protected Student APIs
+- Input Validation
+- Exception Handling
+- Secure Database Access
+
+---
+
+# Future Enhancements
 
 - Unit Testing
 - Docker Support
-- Role-Based Authentication
-- Angular/React Frontend
+- Role Based Authorization
+- Frontend Integration (Angular/React)
 
 ---
 
-## Author
+# Author
 
 **Renu Deshmukh**
 
-Software Developer | ASP.NET Core | C# | SQL Server | Python
+Software Developer  
+ASP.NET Core | C# | SQL Server | Python
