@@ -2,192 +2,223 @@
 
 ## Overview
 
-This project is a **Student Management System** developed using **ASP.NET Core Web API**. It provides secure REST APIs to perform CRUD operations on student records using **JWT Authentication**. The project follows a **Layered Architecture** with Repository and Service patterns for clean and maintainable code.
+This project is a Student Management System developed using ASP.NET Core Web API following a Layered Architecture. It provides secure REST APIs to manage student records with JWT Authentication, Entity Framework Core, SQL Server, Swagger documentation, Global Exception Handling, and Serilog logging.
+
+---
 
 ## Features
 
-* JWT Authentication
-* Get All Students
-* Add Student
-* Update Student
-* Delete Student
-* SQL Server Database
-* Global Exception Handling Middleware
-* Built-in Logging / Serilog
-* Swagger API Documentation
-* Layered Architecture (Controller, Service, Repository)
+- JWT Authentication
+- CRUD Operations
+- Layered Architecture
+- Repository Pattern
+- Entity Framework Core
+- SQL Server
+- Global Exception Handling Middleware
+- Serilog Logging
+- Swagger Documentation
+- Dependency Injection
+- Clean Code Structure
 
-## Technologies Used
+---
 
-* ASP.NET Core Web API
-* C#
-* Entity Framework Core
-* SQL Server
-* JWT Authentication
-* Swagger (Swashbuckle)
-* Serilog / Built-in Logging
+## Technology Stack
+
+- ASP.NET Core Web API (.NET 10)
+- C#
+- Entity Framework Core
+- SQL Server
+- JWT Authentication
+- Swagger / OpenAPI
+- Serilog
+- Visual Studio 2022
+
+---
 
 ## Project Structure
 
 ```
-StudentManagementAPI
+StudentManagementSystem
 │
 ├── Controllers
 ├── Services
 ├── Repositories
 ├── Models
-├── DTOs
 ├── Data
 ├── Middleware
+├── Helpers
 ├── appsettings.json
 ├── Program.cs
 └── README.md
 ```
 
+---
+
 ## Database
 
-Create a SQL Server database and execute the following table script:
-
-```sql
-CREATE TABLE Students
-(
-    Id INT IDENTITY(1,1) PRIMARY KEY,
-    Name NVARCHAR(100) NOT NULL,
-    Email NVARCHAR(100) NOT NULL,
-    Age INT NOT NULL,
-    Course NVARCHAR(100) NOT NULL,
-    CreatedDate DATETIME DEFAULT GETDATE()
-);
-```
-
-## Required NuGet Packages
-
-Install the following packages:
-
-* Microsoft.EntityFrameworkCore.SqlServer
-* Microsoft.EntityFrameworkCore.Tools
-* Microsoft.AspNetCore.Authentication.JwtBearer
-* Swashbuckle.AspNetCore
-* Serilog.AspNetCore
-
-## Configuration
-
-Update the SQL Server connection string in **appsettings.json**.
-
-Example:
-
-```json
-"ConnectionStrings": {
-  "DefaultConnection": "Server=YOUR_SERVER;Database=StudentDB;Trusted_Connection=True;TrustServerCertificate=True;"
-}
-```
-
-Also configure JWT settings:
-
-```json
-"Jwt": {
-  "Key": "YourSecretKey123456789",
-  "Issuer": "StudentAPI",
-  "Audience": "StudentAPI"
-}
-```
-
-## How to Run
-
-1. Clone the repository.
-2. Open the project in Visual Studio 2022.
-3. Restore NuGet packages.
-4. Update the SQL Server connection string.
-5. Run the application.
-6. Open Swagger.
-
-## Authentication
-
-Call the Login API first to generate a JWT token.
-
-**Sample Credentials**
-
-* Username: `admin`
-* Password: `admin123`
-
-Copy the generated token.
-
-Click **Authorize** in Swagger and paste:
+Database Name
 
 ```
-Bearer YOUR_TOKEN
+StudentManagementDB
 ```
+
+Student Table
+
+| Column | Type |
+|---------|------|
+| Id | int |
+| Name | nvarchar |
+| Email | nvarchar |
+| Age | int |
+| Course | nvarchar |
+| CreatedDate | datetime |
+
+---
 
 ## API Endpoints
 
 ### Authentication
 
-**POST**
+| Method | Endpoint |
+|--------|----------|
+| POST | /api/auth/login |
+
+Default Credentials
 
 ```
-/api/auth/login
+Username : admin
+Password : admin123
 ```
-
-### Students
-
-**GET**
-
-```
-/api/student
-```
-
-Returns all students.
 
 ---
 
-**POST**
+### Student APIs
 
-```
-/api/student
-```
-
-Adds a new student.
-
----
-
-**PUT**
-
-```
-/api/student/{id}
-```
-
-Updates an existing student.
+| Method | Endpoint |
+|--------|----------|
+| GET | /api/students |
+| GET | /api/students/{id} |
+| POST | /api/students |
+| PUT | /api/students/{id} |
+| DELETE | /api/students/{id} |
 
 ---
 
-**DELETE**
+## Setup Instructions
 
+### Clone Repository
+
+```bash
+git clone https://github.com/yourusername/StudentManagementSystem-WebAPI.git
 ```
-/api/student/{id}
-```
 
-Deletes a student.
+### Open Project
 
-## Sample Student JSON
+Open the solution in Visual Studio 2022.
+
+### Configure Database
+
+Update the connection string inside **appsettings.json**
 
 ```json
-{
-  "name": "Renu Deshmukh",
-  "email": "renu@example.com",
-  "age": 24,
-  "course": "ASP.NET Core"
+"ConnectionStrings": {
+  "DefaultConnection": "Server=YOUR_SERVER;Database=StudentManagementDB;Trusted_Connection=True;TrustServerCertificate=True;"
 }
 ```
 
-## Project Highlights
+---
 
-* Secure APIs using JWT Authentication
-* Clean Layered Architecture
-* SQL Server integration using Entity Framework Core
-* Global Exception Handling Middleware
-* Logging support
-* Interactive Swagger Documentation
+### Apply Migration
+
+```powershell
+Add-Migration InitialCreate
+
+Update-Database
+```
+
+---
+
+### Run Project
+
+Press
+
+```
+F5
+```
+
+or
+
+```
+Ctrl + F5
+```
+
+---
+
+## Swagger
+
+```
+https://localhost:5001/swagger
+```
+
+Use the Login API to generate the JWT token.
+
+Click **Authorize** and enter:
+
+```
+Bearer YOUR_TOKEN
+```
+
+Now all protected APIs can be accessed.
+
+---
+
+## Logging
+
+Serilog is configured to generate logs.
+
+```
+Logs/
+    log-.txt
+```
+
+---
+
+## Error Handling
+
+Global Exception Middleware returns consistent JSON responses for unhandled exceptions.
+
+Example
+
+```json
+{
+  "success": false,
+  "message": "Internal Server Error"
+}
+```
+
+---
+
+## Security
+
+- JWT Authentication
+- Secure API Endpoints
+- Input Validation
+- Exception Handling
+- Dependency Injection
+
+---
+
+## Future Enhancements
+
+- Unit Testing
+- Docker Support
+- Role-Based Authentication
+- Angular/React Frontend
+
+---
 
 ## Author
 
 **Renu Deshmukh**
+
+Software Developer | ASP.NET Core | C# | SQL Server | Python
