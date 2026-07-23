@@ -8,36 +8,36 @@ The project follows a layered architecture with Controller, Service, and Reposit
 
 ---
 
-## Features
+# Features
 
-- Student CRUD Operations
-- JWT Authentication
-- Secure API Endpoints
-- Layered Architecture
-- Repository Pattern
-- Entity Framework Core
-- SQL Server Database
-- Swagger API Documentation
-- Global Exception Handling Middleware
-- Serilog Logging
-- Input Validation
-
----
-
-## Technology Stack
-
-- ASP.NET Core Web API (.NET 10)
-- C#
-- Entity Framework Core
-- SQL Server
-- JWT Authentication
-- Swagger / OpenAPI
-- Serilog
-- Visual Studio 2022
+* Student CRUD Operations
+* JWT Authentication
+* Secure API Endpoints
+* Layered Architecture
+* Repository Pattern
+* Entity Framework Core
+* SQL Server Database Integration
+* Swagger / OpenAPI Documentation
+* Global Exception Handling Middleware
+* Serilog Logging
+* Input Validation
 
 ---
 
-## Project Architecture
+# Technology Stack
+
+* ASP.NET Core Web API (.NET 10)
+* C#
+* Entity Framework Core
+* SQL Server
+* JWT Authentication
+* Swagger / OpenAPI
+* Serilog
+* Visual Studio 2022
+
+---
+
+# Project Architecture
 
 ```
 StudentManagementSystem
@@ -78,10 +78,10 @@ StudentManagementSystem
 
 # Database Setup
 
-## Option 1: SQL Script
+## SQL Script Setup
 
 1. Open SQL Server Management Studio (SSMS)
-2. Open:
+2. Open the file:
 
 ```
 Database/StudentManagementDB.sql
@@ -105,16 +105,16 @@ Students
 
 ---
 
-## Student Table Structure
+# Student Table Structure
 
-| Column | Data Type |
-|---|---|
-| Id | int |
-| Name | nvarchar(100) |
-| Email | nvarchar(100) |
-| Age | int |
-| Course | nvarchar(100) |
-| CreatedDate | datetime |
+| Column      | Data Type     |
+| ----------- | ------------- |
+| Id          | int           |
+| Name        | nvarchar(100) |
+| Email       | nvarchar(100) |
+| Age         | int           |
+| Course      | nvarchar(100) |
+| CreatedDate | datetime      |
 
 ---
 
@@ -132,9 +132,9 @@ Example:
 
 ---
 
-# Entity Framework Migration (Alternative)
+# Entity Framework Migration (Optional)
 
-Run the following commands in Package Manager Console:
+If using EF Core migrations, run:
 
 ```
 Add-Migration InitialCreate
@@ -173,7 +173,7 @@ Response:
 }
 ```
 
-Use this token in Swagger:
+Use the generated token in Swagger:
 
 ```
 Authorize → Bearer Token
@@ -187,25 +187,35 @@ Bearer YOUR_TOKEN
 
 ---
 
+# Default Credentials
+
+```
+Username: admin
+
+Password: admin123
+```
+
+---
+
 # API Endpoints
 
 ## Authentication
 
-| Method | Endpoint |
-|---|---|
-| POST | /api/auth/login |
+| Method | Endpoint        |
+| ------ | --------------- |
+| POST   | /api/auth/login |
 
 ---
 
 ## Student APIs
 
-| Method | Endpoint | Description |
-|---|---|---|
-| GET | /api/students | Get all students |
-| GET | /api/students/{id} | Get student by id |
-| POST | /api/students | Add new student |
-| PUT | /api/students/{id} | Update student |
-| DELETE | /api/students/{id} | Delete student |
+| Method | Endpoint           | Description       |
+| ------ | ------------------ | ----------------- |
+| GET    | /api/students      | Get all students  |
+| GET    | /api/students/{id} | Get student by id |
+| POST   | /api/students      | Add new student   |
+| PUT    | /api/students/{id} | Update student    |
+| DELETE | /api/students/{id} | Delete student    |
 
 ---
 
@@ -272,11 +282,23 @@ Restore NuGet packages.
 
 ## Step 4
 
-Configure SQL Server connection string.
+Configure SQL Server connection string in:
+
+```
+appsettings.json
+```
 
 ## Step 5
 
-Run application:
+Create database by executing:
+
+```
+Database/StudentManagementDB.sql
+```
+
+## Step 6
+
+Run the application:
 
 ```
 Ctrl + F5
@@ -286,20 +308,20 @@ Ctrl + F5
 
 # Security
 
-- JWT Based Authentication
-- Protected Student APIs
-- Input Validation
-- Exception Handling
-- Secure Database Access
+* JWT Based Authentication
+* Protected Student APIs
+* Input Validation
+* Global Exception Handling
+* Secure Database Access
 
 ---
 
 # Future Enhancements
 
-- Unit Testing
-- Docker Support
-- Role Based Authorization
-- Frontend Integration (Angular/React)
+* Unit Testing
+* Docker Support
+* Role Based Authorization
+* Frontend Integration (Angular/React)
 
 ---
 
@@ -307,5 +329,6 @@ Ctrl + F5
 
 **Renu Deshmukh**
 
-Software Developer  
+Software Developer
+
 ASP.NET Core | C# | SQL Server | Python
